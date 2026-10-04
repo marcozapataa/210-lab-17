@@ -216,17 +216,71 @@ void insertNode(Node*& head, int position, float value) {
 
     cout << "Node successfully inserted.\n";
 }
-void output(Node *hd) {
-    if (!hd) {
+
+// definition for deleteList
+void deleteList(Node *&head) {
+    Node *current = head;
+
+    while (current != nullptr) {
+        head = current->next;
+
+        delete current;
+
+        current = head;
+    }
+
+    head = nullptr;
+}
+
+// definition for output
+void output(Node *head) {
+    if (!head) {
         cout << "Empty list.\n";
         return;
     }
     
     int count = 1;
-    Node *current = hd;
+    Node *current = head;
+
     while (current) {
         cout << "[" << count++ << "] " << current->value << endl;
         current = current->next;
     }
     cout << endl;
+}
+
+// validate the integer input
+int getValidationInt(string prompt) {
+    int input;
+
+    while (true) {
+        cout << prompt;
+
+        if (cin >> input) {
+            return input;
+        }
+
+        cout << "Error: Invalid input. Please try again.\n";
+
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+}
+
+// validate the float input
+float getValidatedFloat(string prompt) {
+    float input;
+
+    while (true) {
+        cout << prompt;
+
+        if (cin >> input) {
+            return input;
+        }
+
+        cout << "Error: Invalid input. Please try again.\n";
+
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
 }
