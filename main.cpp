@@ -32,7 +32,8 @@ int main() {
             head = newVal;
             newVal->next = nullptr;
             newVal->value = tmp_val;
-        } else {
+        } 
+        else {
             newVal->next = head;
             newVal->value = tmp_val;
             head = newVal;
@@ -179,6 +180,41 @@ void deleteNode(Node*& head, int position) {
     delete current;
 
     cout << "Node at position " << position << "deleted.\n";
+}
+
+// definition for insertNode
+void insertNode(Node*& head, int position, float value) {
+    if (position < 0) {
+        cout << "Invalid position. Position cannot be negative.\n";
+        return;
+    }
+
+    Node *current = head;
+    Node *previous = nullptr;
+
+    for (int i = 0; i < position; i++) {
+        if (current == nullptr) {
+            cout << "Position is out of bounds. Node was not inserted.\n";
+            return;
+        }
+
+        previous = current;
+        current = current->next;
+    }
+
+    Node *newNode = new Node;
+
+    newNode->value = value;
+    newNode->next = current;
+
+    if (previous == nullptr) {
+        head = newMode;
+    }
+    else {
+        previous->next = newNode;
+    }
+
+    cout << "Node successfully inserted.\n";
 }
 void output(Node *hd) {
     if (!hd) {
