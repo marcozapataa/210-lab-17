@@ -120,6 +120,66 @@ int main() {
     return 0;
 }
 
+// function definitions
+
+// definition for addNodeFront
+void addNodeFront(Node*& head, float value) {
+    Node *newNode = new Node;
+
+    newNode->value = value;
+    newNode->next = head;
+    head = newNode;
+}
+
+// definition for addNodeTail
+void addNodeTail(Node*& head, float value) {
+    Node *newNode = new Node;
+
+    newNode->value = value;
+    newNode->next = nullptr;
+
+    if (head == nullptr) {
+        head = newNode;
+        return;
+    }
+
+    Node *current = head;
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+    current->next = newNode;
+}
+
+// definition for deleteNode
+void deleteNode(Node*& head, int position) {
+    if (position < 1) {
+        cout << "Invalid position. Positions start at 1.\n";
+        return;
+    }
+    
+    Node *current = head;
+    Node *previous = nullptr;
+
+    for (int i = 1; i < position && current != nullptr; i++) {
+       previous = current;
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "Position exceeds list size. No node deleted.";
+        return;
+    }
+
+    if (previous == nullptr) {
+        head = current->next;
+    }
+    else {
+        previous->next = current->next;
+    }
+    delete current;
+
+    cout << "Node at position " << position << "deleted.\n";
+}
 void output(Node *hd) {
     if (!hd) {
         cout << "Empty list.\n";
