@@ -3,14 +3,20 @@
 
 using namespace std;
 
-const int SIZE = 7;
-
 struct Node {
     float value;
     Node *next;
 };
 
-void output(Node *);
+// Function Prototypes
+void addNodeFront(Node*& head, float value);
+void addNodeTail(Node*& head, float value);
+void deleteNode(Node*& head, int postion);
+void insertNode(Node*& head, int position, float value);
+void deleteList(Node*& head);
+void output(Node *head);
+int getValidatedInt(string prompt);
+float getValidatedFloat(string prompt);
 
 int main() {
     Node *head = nullptr;
