@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib> // Added for rand()
+#include <string>
 
 using namespace std;
 
@@ -9,9 +10,13 @@ struct Node {
 };
 
 // Function Prototypes
+    // I chose to send the pointer by reference because it allows
+    // functions to modify the original head pointer directly without
+    // needing to return anew pointer, making the code simpler and 
+    // easier to manage.
 void addNodeFront(Node*& head, float value);
 void addNodeTail(Node*& head, float value);
-void deleteNode(Node*& head, int postion);
+void deleteNode(Node*& head, int position);
 void insertNode(Node*& head, int position, float value);
 void deleteList(Node*& head);
 void output(Node *head);
@@ -20,7 +25,7 @@ float getValidatedFloat(string prompt);
 
 int main() {
     Node *head = nullptr;
-    int count = 0;
+    int choice = 0;
 
     // Add 4 random nodes to list
     for (int i = 0; i < 4; i++) {
@@ -37,7 +42,7 @@ int main() {
         cout << "5. Delete the entire list\n";
         cout << "6. Print the list\n";
         cout << "7. Exit\n";
-        cout < "---------------------------------\n";
+        cout << "---------------------------------\n";
 
         choice = getValidatedInt("Enter your choice (1-7): ");
         cout << endl;
@@ -59,8 +64,72 @@ int main() {
                 cout << "Node added to front.\n";
                 break;
             }
+
+            case 2: {
+                float value =  getValidatedFloat(
+                    "Enter float value to add to end: "
+                );
+
+                addNodeTail(head, value);
+
+                cout << "Node added to end.\n";
+                break;
+            }
+
+            case 3: {
+                if (head == nullptr) {
+                    cout << "The list is empty. Nothing to delete.\n";
+                    break;
+                }
+
+                cout << "Current List:\n";
+                output(head);
+
+                int position = getValidatedInt(
+                    "Enter the position number of the node to delete: "
+                );
+
+                deleteNode(head, position);
+                break;
+            }
+
+            case 4: {
+                cout << "Current List:\n";
+                output(head);
+
+                int position = getValidatedInt(
+                    "Enter the position after which to insert (0 for front): "
+                );
+
+                float value = getValidatedFloat(
+                    "Enter float value to insert: "
+                );
+                
+                insertNode(head, position, value);
+                break;
+            }
+
+            case 5: {
+                deleteList(head);
+
+                cout << "The entire list has been cleared.\n";
+                break;
+            }
+
+            case 6: {
+                cout << "Current List contents:\n";
+                output(head);
+                break;
+            }
+
+            case 7: {
+                cout << "Exiting\n";
+                deleteList(head);
+                break;
+            }
         }
-    }
+    } 
+        while (choice != 7);
 
     return 0;
 }
@@ -123,7 +192,7 @@ void deleteNode(Node*& head, int position) {
     }
     delete current;
 
-    cout << "Node at position " << position << "deleted.\n";
+    cout << "Node at position " << position << " deleted.\n";
 }
 
 // definition for insertNode
@@ -152,7 +221,7 @@ void insertNode(Node*& head, int position, float value) {
     newNode->next = current;
 
     if (previous == nullptr) {
-        head = newMode;
+        head = newNode;
     }
     else {
         previous->next = newNode;
@@ -194,7 +263,7 @@ void output(Node *head) {
 }
 
 // validate the integer input
-int getValidationInt(string prompt) {
+int getValidatedInt(string prompt) {
     int input;
 
     while (true) {
